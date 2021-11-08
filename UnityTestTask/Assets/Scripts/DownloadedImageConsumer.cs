@@ -14,6 +14,8 @@ public class DownloadedImageConsumer : IDownloadedImageConsumer
 
     public async Task ConsumeDownloadedImageAsync(Texture image)
     {
+        //stub for async
+        await Task.CompletedTask;
         _cardViewModel.SetImage(image);
     }
 }
