@@ -4,19 +4,14 @@ using Interfaces;
 
 namespace DownloadStrategies
 {
-    public class WhenImageReadyDownloadStrategy : IDownloadStrategy
+    public class WhenImageReadyDownloadStrategy : BaseDownloadStrategy
     {
-        private readonly IImageDownloader _imageDownloader;
-        private readonly IImageUrlProvider _imageUrlProvider;
-
         public WhenImageReadyDownloadStrategy(IImageDownloader imageDownloader,
-            IImageUrlProvider imageUrlProvider)
+            IImageUrlProvider imageUrlProvider) : base(imageDownloader, imageUrlProvider)
         {
-            _imageDownloader = imageDownloader;
-            _imageUrlProvider = imageUrlProvider;
         }
 
-        public async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers)
+        public override async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers)
         {
             var count = downloadedImageConsumers.Count;
             var tasks = new Task[count];
@@ -31,7 +26,7 @@ namespace DownloadStrategies
 
         private async Task DownloadSingleAsync(IDownloadedImageConsumer downloadedImageConsumer)
         {
-            var image = await _imageDownloader.DownloadImageAsync(_imageUrlProvider.GetUrl());
+            var image = await ImageDownloader.DownloadImageAsync(ImageUrlProvider.GetUrl());
             await downloadedImageConsumer.ConsumeDownloadedImageAsync(image);
         }
     }

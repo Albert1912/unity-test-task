@@ -4,23 +4,19 @@ using Interfaces;
 
 namespace DownloadStrategies
 {
-    public class OneByOneDownloadStrategy : IDownloadStrategy
+    public class OneByOneDownloadStrategy : BaseDownloadStrategy
     {
-        private readonly IImageDownloader _imageDownloader;
-        private readonly IImageUrlProvider _imageUrlProvider;
 
         public OneByOneDownloadStrategy(IImageDownloader imageDownloader,
-            IImageUrlProvider imageUrlProvider)
+            IImageUrlProvider imageUrlProvider) : base(imageDownloader, imageUrlProvider)
         {
-            _imageDownloader = imageDownloader;
-            _imageUrlProvider = imageUrlProvider;
         }
 
-        public async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers)
+        public override async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers)
         {
             foreach (var downloadedImageConsumer in downloadedImageConsumers)
             {
-                var image = await _imageDownloader.DownloadImageAsync(_imageUrlProvider.GetUrl());
+                var image = await ImageDownloader.DownloadImageAsync(ImageUrlProvider.GetUrl());
                 await downloadedImageConsumer.ConsumeDownloadedImageAsync(image);
             }
         }
