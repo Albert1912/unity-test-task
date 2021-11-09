@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Interfaces;
 using Ui;
 using UnityEngine;
@@ -13,10 +13,10 @@ public class DownloadedImageConsumer : IDownloadedImageConsumer
         _cardViewModel = cardViewModel;
     }
 
-    public async Task ConsumeDownloadedImageAsync(Texture image, CancellationToken cancellationToken)
+    public async UniTask ConsumeDownloadedImageAsync(Texture image, CancellationToken cancellationToken)
     {
         //stub for async
-        await Task.CompletedTask;
+        await UniTask.CompletedTask;
         _cardViewModel.SetImage(image);
     }
 }

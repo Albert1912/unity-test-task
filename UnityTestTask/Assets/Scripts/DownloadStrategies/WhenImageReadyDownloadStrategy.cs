@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Interfaces;
 
 namespace DownloadStrategies
@@ -12,21 +12,21 @@ namespace DownloadStrategies
         {
         }
 
-        public override async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
+        public override async UniTask StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
             CancellationToken cancellationToken)
         {
             var count = downloadedImageConsumers.Count;
-            var tasks = new Task[count];
+            var tasks = new UniTask[count];
 
             for (var i = 0; i < count; i++)
             {
                 tasks[i] = DownloadSingleAsync(downloadedImageConsumers[i], cancellationToken);
             }
 
-            await Task.WhenAll(tasks);
+            await UniTask.WhenAll(tasks);
         }
 
-        private async Task DownloadSingleAsync(IDownloadedImageConsumer downloadedImageConsumer,
+        private async UniTask DownloadSingleAsync(IDownloadedImageConsumer downloadedImageConsumer,
             CancellationToken cancellationToken)
         {
             var image = await ImageDownloader.DownloadImageAsync(ImageUrlProvider.GetUrl(), cancellationToken);

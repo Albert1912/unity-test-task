@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Interfaces;
 
 namespace DownloadStrategies
@@ -13,7 +13,7 @@ namespace DownloadStrategies
         {
         }
 
-        public override async Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
+        public override async UniTask StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
             CancellationToken cancellationToken)
         {
             foreach (var downloadedImageConsumer in downloadedImageConsumers)

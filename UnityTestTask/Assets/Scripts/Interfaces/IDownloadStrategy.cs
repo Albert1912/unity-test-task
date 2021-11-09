@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace Interfaces
 {
     public interface IDownloadStrategy
     {
-        Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
+        UniTask StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
             CancellationToken cancellationToken);
     }
 }

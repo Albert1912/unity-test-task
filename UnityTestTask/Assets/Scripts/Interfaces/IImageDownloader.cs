@@ -1,11 +1,11 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Interfaces
 {
     public interface IImageDownloader
     {
-        Task<Texture> DownloadImageAsync(string url, CancellationToken cancellationToken);
+        UniTask<Texture> DownloadImageAsync(string url, CancellationToken cancellationToken);
     }
 }
