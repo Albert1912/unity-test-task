@@ -27,6 +27,8 @@ public class DownloaderMono : MonoBehaviour
 
         _downloadButton.onClick.AddListener(_downloadAction);
         _cancelButton.onClick.AddListener(_cancelAction);
+
+        SetDownloadStateActive(false);
     }
 
     private void OnDestroy()
@@ -38,6 +40,7 @@ public class DownloaderMono : MonoBehaviour
     private void OnCancelButtonClicked()
     {
         CancelTokenAndDispose();
+        SetDownloadStateActive(false);
         _cardViewModelCollection.ResetCollectionToDefault();
     }
 
@@ -46,8 +49,7 @@ public class DownloaderMono : MonoBehaviour
         var downloadStrategyType = _selectedDownloadStrategyMono.DownloadStrategyType;
         var downloadStrategy = _downloadStrategyFactoryMono.DownloadStrategyFactory.Provide(downloadStrategyType);
 
-        _downloadButton.interactable = false;
-        _cancelButton.interactable = true;
+        SetDownloadStateActive(true);
 
         _cancellationTokenSource = new CancellationTokenSource();
 
@@ -56,9 +58,7 @@ public class DownloaderMono : MonoBehaviour
             _cancellationTokenSource.Token);
 
         CancelTokenAndDispose();
-
-        _downloadButton.interactable = true;
-        _cancelButton.interactable = false;
+        SetDownloadStateActive(false);
     }
 
     private void OnApplicationQuit()
@@ -71,5 +71,11 @@ public class DownloaderMono : MonoBehaviour
         _cancellationTokenSource?.Cancel();
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = null;
+    }
+
+    private void SetDownloadStateActive(bool isActive)
+    {
+        _downloadButton.interactable = !isActive;
+        _cancelButton.interactable = isActive;
     }
 }
