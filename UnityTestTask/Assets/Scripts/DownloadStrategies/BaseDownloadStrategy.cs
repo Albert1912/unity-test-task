@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Interfaces;
 
@@ -15,6 +16,7 @@ namespace DownloadStrategies
             ImageUrlProvider = imageUrlProvider;
         }
 
-        public abstract Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers);
+        public abstract Task StartDownloadAsync(List<IDownloadedImageConsumer> downloadedImageConsumers,
+            CancellationToken cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Interfaces;
 using UnityEngine;
@@ -6,11 +7,11 @@ using UnityEngine.Networking;
 
 public class ImageDownloader : IImageDownloader
 {
-    public async Task<Texture> DownloadImageAsync(string url)
+    public async Task<Texture> DownloadImageAsync(string url, CancellationToken cancellationToken)
     {
         using (var webRequest = UnityWebRequestTexture.GetTexture(url))
         {
-            await webRequest.SendWebRequest();
+            await webRequest.SendWebRequest().WithCancellation(cancellationToken);
 
             if (webRequest.isHttpError || webRequest.isNetworkError)
             {
