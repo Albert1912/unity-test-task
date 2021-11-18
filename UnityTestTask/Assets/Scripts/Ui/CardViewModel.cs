@@ -32,6 +32,11 @@ namespace Ui
 
         public void ResetToDefault()
         {
+            if (_image.texture != null)
+            {
+                Destroy(_image.texture);
+            }
+
             _image.texture = null;
         }
     }
