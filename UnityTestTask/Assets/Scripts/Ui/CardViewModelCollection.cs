@@ -9,17 +9,16 @@ namespace Ui
     {
         [SerializeField] private List<CardViewModel> _cardViewModels;
 
+        public List<IDownloadedImageConsumer> Consumers { get; private set; }
+        
         public void ResetCollectionToDefault()
         {
             foreach (var cardViewModel in _cardViewModels)
             {
                 cardViewModel.ResetToDefault();
             }
-        }
-
-    public List<IDownloadedImageConsumer> GetConsumers()
-        {
-            return _cardViewModels.Select(x => x.Consumer).ToList();
+            
+            Consumers = _cardViewModels.Select(x => x.Consumer).ToList();
         }
     }
 }
