@@ -12,12 +12,6 @@ public class ImageDownloader : IImageDownloader
         {
             await webRequest.SendWebRequest().WithCancellation(cancellationToken);
 
-            if (webRequest.isHttpError || webRequest.isNetworkError)
-            {
-                Debug.LogError($"An error occured while downloading image from {url}.Http code: {webRequest.responseCode}. Message: {webRequest.error}");
-                return null;
-            }
-
             return DownloadHandlerTexture.GetContent(webRequest);
         }
     }
